@@ -1,5 +1,6 @@
-let g:rustfmt_autosave = 1
+set number
 
+let g:rustfmt_autosave = 1
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
