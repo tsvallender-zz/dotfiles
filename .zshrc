@@ -16,3 +16,4 @@ export PAGER='less'
 
 alias ll='ls -l'
 alias la='ls -lA'
+alias edwin="scheme -eval \"(edit 'console)\""
