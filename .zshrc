@@ -22,4 +22,4 @@ alias la='ls -lA'
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
-export SUMMON-PLAYER_DATABASE_PASSWORD="pgpass"
+export SUMMONPLAYER_DATABASE_PASSWORD="pgpass"
