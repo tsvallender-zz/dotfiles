@@ -1,6 +1,6 @@
 source ~/.profile
-source ~/code/dotfiles/.zsh_git.sh
-source ~/code/dotfiles/.zsh_prompt.sh
+source ~/.zsh_git.sh
+source ~/.zsh_prompt.sh
 
 # Commands without arguments should resume proc if possible
 setopt auto_resume
