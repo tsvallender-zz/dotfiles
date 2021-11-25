@@ -1,9 +1,10 @@
 [user]
 	name = Trevor Vallender
-	email = tsv@tsv.me.uk
+	email = trevor@tsvallender.co.uk
 [core]
 	autocrlf = input
 	safecrlf = true
+	excludesfile = /home/tsv/.gitignore_global
 [alias]
 	co = checkout
 	cm = commit

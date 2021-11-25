@@ -19,7 +19,6 @@ export PAGER='less'
 alias ll='ls -l'
 alias la='ls -lA'
 
-
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
-export SUMMONPLAYER_DATABASE_PASSWORD="pgpass"
+
