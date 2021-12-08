@@ -1,15 +1,3 @@
-;; UI Stuff
-(load-theme 'wombat)
-(setq inhibit-startup-message t)
-(menu-bar-mode -1)
-(setq visible-bell t)
-
-;; GUI only
-(when (find-image '((:typexpm :file "pink-gnu.xpm")))
-  (tool-bar-mode -1)
-  (set-fringe-mode 10)
-  (set-face-attribute 'default nil :font "Ubuntu Monospace" :height 280))
-
 ;; Initialize package sources
 (require 'package)
  (setq package-archives '(("melpa" . "https://melpa.org/packages/")
@@ -24,10 +12,68 @@
 
 (require 'use-package)
 (setq use-package-always-ensure t)
-(custom-set-variables
- '(package-selected-packages '(ivy command-log-mode use-package markdown-mode)))
-(custom-set-faces)
 
+;; Change the user-emacs-directory to keep unwanted things out of ~/.emacs.d
+(setq user-emacs-directory (expand-file-name "~/.cache/emacs/")
+      url-history-file (expand-file-name "url/history" user-emacs-directory))
+;; Use no-littering to automatically set common paths to the new user-emacs-directory
+(use-package no-littering)
+;; Keep customization settings in a temporary file (thanks Ambrevar!)
+(setq custom-file
+      (if (boundp 'server-socket-dir)
+          (expand-file-name "custom.el" server-socket-dir)
+        (expand-file-name (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory)))
+(load custom-file t)
+
+;; UI Stuff
+(load-theme 'wombat)
+(setq inhibit-startup-message t)
+(menu-bar-mode -1)
+(setq visible-bell t)
+
+;; Line numbers
+(column-number-mode)
+(global-display-line-numbers-mode t)
+(dolist (mode '(org-mode-hook
+		term-mode-hook
+		eshell-mode-hook))
+  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
+;; Coloured matching parens
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
+
+;; Pretty modeline
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1))
+
+;; GUI only
+(when (display-graphic-p)
+  (scroll-bar-mode -1)        ; Disable visible scrollbar
+  (tool-bar-mode -1)          ; Disable the toolbar
+  (tooltip-mode -1)           ; Disable tooltips
+  (set-fringe-mode 10)
+  (use-package all-the-icons)
+  (set-face-attribute 'default nil :font "Ubuntu Mono" :height 120))
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(rainbow-delimiters doom-modeline ivy command-log-mode use-package markdown-mode)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+
+(use-package diminish) ;; For hiding/renaming modes
+(use-package swiper)
 (use-package ivy
   :diminish
   :bind (("C-s" . swiper)
@@ -46,3 +92,31 @@
   :config)
 
 (ivy-mode 1)
+
+(use-package which-key
+  :init (which-key-mode)
+  :diminish which-key-mode
+  :config
+  (setq which-key-idle-delay 0.3))
+
+;; Extra help
+(use-package counsel
+  :bind (("M-x" . counsel-M-x)
+	 ("C-x b" . counsel-ibuffer)
+	 ("C-x C-f" . counsel-find-file)
+	 :map minibuffer-local-map
+	 ("C-r" . 'counsel-minibuffer-history))
+  :config
+  (setq ivy-initial-inputs-alist nil))
+(use-package ivy-rich)
+(ivy-rich-mode 1)
+(use-package helpful
+  :custom
+  (counsel-describe-function-function #'helpful-callable)
+  (counsel-describe-variable-function #'helpful-variable)
+  :bind
+  ([remap describe-function] . counsel-describe-function)
+  ([remap describe-symbol] . helpful-symbol)
+  ([remap describe-variable] . counsel-describe-variable)
+  ([remap describe-command] . helpful-command)
+  ([remap describe-key] . helpful-key))
