@@ -26,7 +26,6 @@
 (load custom-file t)
 
 ;; UI Stuff
-(load-theme 'wombat)
 (setq inhibit-startup-message t)
 (menu-bar-mode -1)
 (setq visible-bell t)
@@ -47,6 +46,15 @@
 (use-package doom-modeline
   :ensure t
   :init (doom-modeline-mode 1))
+
+(use-package doom-themes
+  :config
+  (setq doom-themes-enable-bold t
+	doom-themes-enable-italic t)
+  (load-theme 'doom-solarized-dark t)
+  (doom-themes-visual-bell-config)
+  (doom-themes-neotree-config)
+  (doom-themes-org-config))
 
 ;; GUI only
 (when (display-graphic-p)
@@ -120,3 +128,5 @@
   ([remap describe-variable] . counsel-describe-variable)
   ([remap describe-command] . helpful-command)
   ([remap describe-key] . helpful-key))
+
+(use-package markdown-mode)
