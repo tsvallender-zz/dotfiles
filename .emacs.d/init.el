@@ -1,3 +1,11 @@
+;; Dont litter
+(setq backup-directory-alist `(("." . ,(expand-file-name "tmp/backups/" user-emacs-directory))))
+(make-directory (expand-file-name "tmp/autosaves/" user-emacs-directory) t)
+(setq auto-save-list-file-prefix (expand-file-name "tmp/autosaves/sessions/" user-emacs-directory)
+      auto-save-file-name-transforms `((".*" ,(expand-file-name "tmp/autosaves/" user-emacs-directory) t)))
+; (setq create-lockfiles nil)
+(setq user-emacs-directory (expand-file-name "~/.cache/emacs"))
+
 ;; Initialize package sources
 (require 'package)
  (setq package-archives '(("melpa" . "https://melpa.org/packages/")
