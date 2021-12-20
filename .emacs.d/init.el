@@ -65,13 +65,21 @@
   (doom-themes-org-config))
 
 ;; GUI only
-(when (display-graphic-p)
-  (scroll-bar-mode -1)        ; Disable visible scrollbar
-  (tool-bar-mode -1)          ; Disable the toolbar
-  (tooltip-mode -1)           ; Disable tooltips
-  (set-fringe-mode 10)
-  (use-package all-the-icons)
-  (set-face-attribute 'default nil :font "Ubuntu Mono" :height 120))
+(scroll-bar-mode -1)        ; Disable visible scrollbar
+(tool-bar-mode -1)          ; Disable the toolbar
+(tooltip-mode -1)           ; Disable tooltips
+(set-fringe-mode 10)
+(use-package all-the-icons)
+(defun efs/set-font-faces ()
+  (set-face-attribute 'default nil :font "IBM Plex Mono" :height 120)
+  (set-face-attribute 'fixed-pitch nil :font "IBM Plex Mono" :height 120)
+  (set-face-attribute 'fixed-pitch nil :font "IBM Plex Sans" :height 120))
+(if (daemonp)
+    (add-hook 'after-make-frame-functions
+	      (lambda (frame)
+		(with-selected-frame frame
+		  (efs/set-font-faces))))
+  (efs/set-font-faces))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

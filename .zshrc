@@ -13,9 +13,10 @@ setopt no_flow_control
 bindkey -e
 
 export GOPATH=$HOME/code/go
-export EDITOR='emacs'
+export EDITOR='emacsclient -cna emacs'
 export PAGER='less'
 
+alias e=$EDITOR
 alias ll='ls -l'
 alias la='ls -lA'
 
