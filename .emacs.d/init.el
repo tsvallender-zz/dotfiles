@@ -146,3 +146,15 @@
   ([remap describe-key] . helpful-key))
 
 (use-package markdown-mode)
+
+(use-package yaml-mode)
+(add-hook 'yaml-mode-hook
+          (lambda ()
+            (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+
+(use-package dockerfile-mode)
+
+; Ruby
+(use-package rvm)
+(rvm-use-default)
+
